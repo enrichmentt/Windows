@@ -1,6 +1,8 @@
 ﻿
 function Disable-Telemetry
 {
+    #requires –RunAsAdministrator
+    
     [CmdletBinding()]
     param (
         [string[]] $ComputerName = $env:COMPUTERNAME,
