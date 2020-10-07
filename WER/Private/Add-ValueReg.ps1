@@ -5,6 +5,7 @@
     (
         [byte] $DumpType = [System.Convert]::ToByte(2),
 
+        [Parameter(Mandatory=$true)]
         [string] $DumpFolder,
 
         [byte] $DumpCount = [System.Convert]::ToByte(10),

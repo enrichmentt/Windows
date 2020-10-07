@@ -7,6 +7,7 @@
         [Parameter(Mandatory = $true)]
         [string] $KeyName,
 
+        [Parameter(Mandatory = $true)]
         $ObjectReg
     )
 
