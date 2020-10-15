@@ -30,9 +30,14 @@
 
         [string] $HKLM = "2147483650"
         $keyName = "SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\"
-        $Names = ($objReg.EnumKey($HKLM, $keyName))
+        $Names = ($objReg.EnumKey($HKLM, $keyName)).sNames
 
-        foreach ($name in $Names.sNames)
+        if ($Process)
+        {
+            $Names = $Names | Where-Object {$_ -match $Process}
+        }
+
+        foreach ($name in $Names)
         {
             $path = $keyName + $name
             $DumpFolderValue = $objReg.GetStringValue($HKLM, $path, 'DumpFolder')
@@ -56,5 +61,5 @@
                 $obj
             }
         }
-    }    
+    }
 }
