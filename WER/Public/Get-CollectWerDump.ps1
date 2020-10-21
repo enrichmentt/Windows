@@ -29,12 +29,12 @@
         }
 
         [string] $HKLM = "2147483650"
-        $keyName = "SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\"
+        $keyName = "SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps"
         $Names = ($objReg.EnumKey($HKLM, $keyName))
 
         foreach ($name in $Names.sNames)
         {
-            $path = $keyName + $name
+            $path = [System.IO.Path]::Combine($keyName, $name)
             $DumpFolderValue = $objReg.GetStringValue($HKLM, $path, 'DumpFolder')
             $DumpType = $objReg.GetDWORDValue($HKLM, $path, 'DumpType')
             $DumpCount = $objReg.GetDWORDValue($HKLM, $path, 'DumpCount')
@@ -56,5 +56,5 @@
                 $obj
             }
         }
-    }    
+    }
 }
