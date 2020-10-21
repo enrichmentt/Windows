@@ -5,7 +5,7 @@
     (
         [byte] $DumpType = [System.Convert]::ToByte(2),
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string] $DumpFolder,
 
         [byte] $DumpCount = [System.Convert]::ToByte(10),
@@ -29,7 +29,7 @@
 
         if ($returnDumpCount.ReturnValue -eq 0 -and $returnDumpFolder.ReturnValue -eq 0 -and $returnDumpType.ReturnValue -eq 0)
         {
-            Write-Host "Настройка дампов в `"$SubKeyName`" на $server успешно завершено" -ForegroundColor Green
+            Write-Host "$SubKeyName create on $server" -ForegroundColor Green
         }
         else
         {
