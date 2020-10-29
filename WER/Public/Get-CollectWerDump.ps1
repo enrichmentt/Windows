@@ -16,6 +16,8 @@
         $cred = $Credential
     }
 
+    $i = 1
+
     foreach ($Comp in $ComputerName)
     {
         try
@@ -61,5 +63,9 @@
                 $obj
             }
         }
+
+        [int]$PercendComplited = $i / $ComputerName.Count * 100
+        Write-Progress -Activity "Working..." -Status "Get WER on $Comp"  -CurrentOperation "$percendComplited % complete" -PercentComplete $PercendComplited
+        $i++
     }
 }
