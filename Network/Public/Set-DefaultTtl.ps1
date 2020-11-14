@@ -10,7 +10,12 @@ param
 try
 {
     Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\ -Name DefaultTTL -Value $TTL
-    Restart-Computer
+
+    $ans = Read-Host "Restart computer?[y/n]"
+    if ($ans.ToUpper() -eq "Y")
+    {
+        Restart-Computer
+    }
 }
 catch
 {
