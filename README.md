@@ -1,1 +1,1 @@
-### Scripts for Windows
+### Scripts for the windows operating system
