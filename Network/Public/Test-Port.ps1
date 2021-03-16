@@ -28,10 +28,10 @@
             if ($Tcp)
             {
                 $Type = 'TCP'
-                $TcpClient = [System.Net.Sockets.TcpClient]::new()
+                $TcpClient = New-Object System.Net.Sockets.TcpClient
                 try
                 {
-                    $Connect = $TcpClient.BeginConnect($Dest, $P, $null, $null)  
+                    $Connect = $TcpClient.BeginConnect($Dest, $P, $null, $null)
                     $Wait = $Connect.AsyncWaitHandle.WaitOne($Timeout, $false)
 
                     if (!$Wait)
@@ -40,10 +40,10 @@
                         $Notes = "Connection time out"
                     }
                     else
-                    { 
+                    {
                         try
                         {
-                            $TcpClient.EndConnect($Connect) 
+                            $TcpClient.EndConnect($Connect)
                             $Open = $true
                             $Notes = ""
                         }
@@ -61,43 +61,43 @@
             if ($Udp)
             {
                 $Type = 'UDP'
-                $UdpClient = [System.Net.Sockets.UdpClient]::new()
-                $UdpClient.client.ReceiveTimeout = $Timeout 
-                $UdpClient.Connect("$Dest", $P) 
-                $Text = new-object System.Text.AsciiEncoding 
-                $byte = $Text.GetBytes("$(Get-Date)") 
-                [void]$UdpClient.Send($byte, $byte.length) 
-                $RemoteEndpoint = New-Object system.net.ipendpoint([system.net.ipaddress]::Any, 0) 
+                $UdpClient = New-Object System.Net.Sockets.UdpClient
+                $UdpClient.client.ReceiveTimeout = $Timeout
+                $UdpClient.Connect("$Dest", $P)
+                $Text = New-Object System.Text.AsciiEncoding
+                $byte = $Text.GetBytes("$(Get-Date)")
+                [void]$UdpClient.Send($byte, $byte.length)
+                $RemoteEndpoint = New-Object system.net.ipendpoint([system.net.ipaddress]::Any, 0)
 
                 Try
-                { 
-                    $ReceiveBytes = $UdpClient.Receive([ref]$RemoteEndpoint) 
+                {
+                    $ReceiveBytes = $UdpClient.Receive([ref]$RemoteEndpoint)
                     [string]$ReturnData = $a.GetString($ReceiveBytes)
 
                     if ($ReturnData)
                     {
                         $Open = $true
-                        
-                        $UdpClient.close()   
-                    }                       
+
+                        $UdpClient.close()
+                    }
                 }
                 catch
                 {
                     if ($_.ToString() -match "\bRespond after a period of time\b")
-                    {   
-                        $UdpClient.Close()  
-                        if (Test-Connection -comp $Dest -count 1 -quiet)
-                        {   
-                            $Open = $True 
-                            $Notes = "" 
+                    {
+                        $UdpClient.Close()
+                        if (Test-Connection -comp $Dest -Count 1 -Quiet)
+                        {
+                            $Open = $True
+                            $Notes = ""
                         }
                         else
                         {
-                            $Open = $False 
-                            $Notes = "Unable to verify if port is open or if host is unavailable."                                 
-                        }                         
+                            $Open = $False
+                            $Notes = "Unable to verify if port is open or if host is unavailable."
+                        }
                     }
-                }  
+                }
             }
 
             [PSCustomObject]@{
