@@ -1,24 +1,4 @@
-$Public = Get-ChildItem $PSScriptRoot\Public\*.ps1 -Recurse -ErrorAction SilentlyContinue
-$Private = Get-ChildItem $PSScriptRoot\Private\*.ps1 -Recurse -ErrorAction SilentlyContinue
+Get-ChildItem $PSScriptRoot | Unblock-File
+Get-ChildItem $PSScriptRoot\*.ps1 | ForEach-Object {. $_.FullName}
 
-
-if ($Private) {
-    Foreach ($import in @($Public + $Private)) {
-        Try {
-            . $import.fullname
-        }
-        Catch {
-            Write-Error "Failed to import function $($import.fullname): $_"
-        }
-    }
-}
-else {
-    Foreach ($import in $Public) {
-        Try {
-            . $import.fullname
-        }
-        Catch {
-            Write-Error "Failed to import function $($import.fullname): $_"
-        }
-    }
-}
+Export-ModuleMember -Function *
