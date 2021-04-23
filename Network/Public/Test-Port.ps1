@@ -1,5 +1,36 @@
 ﻿function Test-Port
 {
+    <#
+    .SYNOPSIS
+    Проверка доступности порта
+
+    .DESCRIPTION
+    Проверка доступности порта TCP или UPD
+
+    .PARAMETER Destination
+    Цель
+
+    .PARAMETER Port
+    Номер порта
+
+    .PARAMETER Timeout
+    Время ожидания
+
+    .PARAMETER Tcp
+    Tcp
+
+    .PARAMETER Udp
+    Udp
+
+    .EXAMPLE
+    Test-Port -Destination 8.8.8.8 -Port 53
+    Проверка порта 53 TCP
+
+    .EXAMPLE
+    Test-Port -Destination 8.8.8.8 -Port 53 -Udp
+    Проверка порта 53 UDP
+
+    #>
     [CmdletBinding()]
     param (
         [Parameter(Position = 0, Mandatory = $true)]
