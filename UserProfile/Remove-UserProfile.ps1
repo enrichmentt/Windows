@@ -53,7 +53,7 @@ function Remove-UserProfile
 
     try
     {
-        $User = Get-WmiObject -Class Win32_UserProfile @Prop -ErrorAction Stop | Sort-Object LastUseTime
+        [array]$User = Get-WmiObject -Class Win32_UserProfile @Prop -ErrorAction Stop | Sort-Object LastUseTime
         if ($User)
         {
             for ($i = 0; $i -lt $User.Count; $i++)
