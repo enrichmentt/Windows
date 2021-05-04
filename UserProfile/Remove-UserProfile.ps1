@@ -43,7 +43,7 @@ function Remove-UserProfile
     }
     if ($UserName)
     {
-        $Prop.Filter = [string]::Concat("LocalPath LIKE '%", $UserrjhjName, "%'")
+        $Prop.Filter = [string]::Concat("LocalPath LIKE '%", $UserName, "%'")
     }
     if ($OlderDays)
     {
