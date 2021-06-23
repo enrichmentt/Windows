@@ -54,6 +54,14 @@
 
     foreach ($Dest in $Destination)
     {
+        $Ping = Test-Connection $Dest -Count 1 -ErrorAction Ignore
+
+        if($null -eq $Ping){
+            $PingResult = $false
+        }else{
+            $PingResult = $true
+        }
+
         foreach ($P in $Port)
         {
             if ($Tcp)
@@ -136,8 +144,11 @@
                 Port        = $P
                 Type        = $Type
                 Open        = $Open
+                Ping        = $PingResult
                 Notes       = $Notes
             }
         }
+
+        $Ping = $null
     }
 }
